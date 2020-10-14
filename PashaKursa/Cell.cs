@@ -28,27 +28,13 @@ namespace PashaKursa
                 Height = Cell.Height,
                 Image = null,
                 FlatStyle = FlatStyle.Flat,
-                //BorderStyle = BorderStyle.FixedSingle,
                 AutoSize = false,
                 Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(204))),
                 BackColor = Color.LightGray,
                 ForeColor = Color.LightGray,
                 Text = ""
             };
-            //.MouseEnter += new EventHandler(LabelEnter);
-            //label.MouseLeave += new EventHandler(LabelLeave);
         }
 
-        private void LabelEnter(object sender, EventArgs e)
-        {
-            Label label = (Label)sender;
-            label.BorderStyle = BorderStyle.Fixed3D;
-        }
-
-        private void LabelLeave(object sender, EventArgs e)
-        {
-            Label label = (Label)sender;
-            label.BorderStyle = BorderStyle.FixedSingle;
-        }
     }
 }

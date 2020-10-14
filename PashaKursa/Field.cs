@@ -7,13 +7,12 @@ namespace PashaKursa
 {
     public class Field
     {
+        public static int X { get; set; } = 2;
+        public static int Y { get; set; } = 2;
         public int Width { get; set; }
         public int Height { get; set; }
         public int Mines { get; set; }
-        public static int X { get; set; } = 2;
-        public static int Y { get; set; } = 2;
         public Cell[,] cells { get; set; }
-
         public List<Point> minespos { get; set; }
 
         public Field(Mode mode)
@@ -42,19 +41,11 @@ namespace PashaKursa
 
         public Field(Mode mode, int Width, int Height, int Mines)
         {
-            switch (mode)
-            {
-                case Mode.Custom:
-                    this.Width = Width;
-                    this.Height = Height;
-                    this.Mines = Mines;
+            this.Width = Width;
+            this.Height = Height;
+            this.Mines = Mines;
 
-                    CreateField();
-                    break;
-                default:
-                    new Field(mode);
-                    break;
-            }
+            CreateField();
         }
 
         private void CreateField()
@@ -68,12 +59,18 @@ namespace PashaKursa
                 for (int j = 0; j < this.Height; j++)
                 {
                     cells[i, j] = new Cell(x, y);
-                    cells[i, j].button.MouseClick += ButtonClick;
+                    cells[i, j].button.MouseDown += ButtonClick;
                     x += Cell.Width + 2;
                 }
                 y += Cell.Height + 2;
                 x = Field.X;
             }
+
+            Label flagCount = new Label
+            {
+
+            };
+
             TakeBombs();
             CheckBombs();
         }
@@ -101,7 +98,8 @@ namespace PashaKursa
             for (int i = 0; i < this.Mines; i++)
             {
                 int x = minespos[i].X;
-                int y = minespos[i].Y;
+                int y = minespos[i].Y;                
+                
                 if ((x > 0))
                 {
                     cells[x - 1, y].value++;
@@ -142,83 +140,39 @@ namespace PashaKursa
             Button button = (Button)sender;
             Point position = FindCell(button);
             
-            //gfys
             if(e.Button == MouseButtons.Right)
             {
-
-            }
-            else
-            {
-                if(cells[position.X, position.Y].isMine)
+                if (!cells[position.X, position.Y].isChecked)
                 {
-                    MessageBox.Show("YOU LOSE!", "LOSER!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    button.Image = Properties.Resources.flag as Bitmap;
+                    cells[position.X, position.Y].isChecked = true;
                 }
                 else
                 {
-                    if(cells[position.X, position.Y].value == 0)
+                    button.Image = null;
+                    cells[position.X, position.Y].isChecked = false;
+                }
+                CheckWin();
+            }
+            else if (!cells[position.X, position.Y].isChecked)
+            {
+                if (cells[position.X, position.Y].isMine)
+                {
+                    MessageBox.Show("YOU LOSE!", "LOSER!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Application.Restart();
+                }
+                else
+                {
+                    if (cells[position.X, position.Y].value == 0)
                     {
                         CheckEmptyCell(position.X, position.Y);
-                        Relaxation();
                     }
                     else
                     {
-                        cells[position.X, position.Y].button.Text = Convert.ToString(cells[position.X, position.Y].value);
-                        cells[position.X, position.Y].button.ForeColor = Color.Navy;
-                        cells[position.X, position.Y].button.Enabled = false;
+                        ChangeCell(position.X, position.Y);
                     }
                 }
             }
-            
-
-
-
-
-
-            /*if (e.Button == MouseButtons.Right)
-            {
-                if (numflag <= 0)
-                {
-                    numflag = 0;
-                    MessageBox.Show("You have run out of flags!", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                else
-                {
-                    numflag--;
-                    label.Image = Image.FromFile("flag.png");
-                    bool checkflag = CheckFlag(label);
-                    if (checkflag == true)
-                    {
-                        numflag++;
-                        label.Image = null;
-                        label.Invalidate();
-                    }
-                    else
-                    {
-                        label.Image = Image.FromFile("flag.png");
-                    }
-                }
-            }
-            else
-            {
-                timer1.Enabled = true;
-                label.BackColor = Color.LightSlateGray;
-                int X = label.Left;
-                int Y = label.Top;
-                row = Convert.ToInt32(Math.Truncate(((Y - Data.Standart.Y) / Convert.ToDouble(Cell.Height))));
-                col = Convert.ToInt32(Math.Truncate(((X - Data.Standart.X) / Convert.ToDouble(Cell.Width))));
-                if (labels[row, col].value == 0)
-                {
-                    CheckEmptyCell(labels, row, col);
-                }
-                label.ForeColor = Color.Blue;
-                label.Enabled = false;
-                if (label.Text == "B")
-                {
-                    label.BackColor = Color.Red;
-                    MessageBox.Show("YOU LOSE!", "LOSER!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    this.Close();
-                }
-            }*/
         }
 
         private Point FindCell(Button button)
@@ -234,16 +188,12 @@ namespace PashaKursa
                 }
             }
             return new Point(0, 0);
-
         }
-
 
         private void CheckEmptyCell(int x, int y)
         {
-            cells[x, y].button.ForeColor = Color.Navy;
-            cells[x, y].button.Enabled = false;
-            cells[x, y].button.Text = "";
-            //cells[x, y].button.BackColor = Color.LightSlateGray;
+            ChangeCell(x, y);
+
             if ((x > 0))
             {
                 if ((cells[x - 1, y].value == 0) && (cells[x - 1, y].button.Enabled == true))
@@ -252,10 +202,7 @@ namespace PashaKursa
                 }
                 else
                 {
-                    cells[x - 1, y].button.ForeColor = Color.Navy;
-                    cells[x - 1, y].button.Enabled = false;
-                    cells[x - 1, y].button.Text = Convert.ToString(cells[x - 1, y].value);
-                    //cells[x - 1, y].button.BackColor = Color.LightSlateGray;
+                    ChangeCell(x - 1, y);
                 }
             }
             if ((x < this.Width - 1))
@@ -266,10 +213,7 @@ namespace PashaKursa
                 }
                 else
                 {
-                    cells[x + 1, y].button.ForeColor = Color.Navy;
-                    cells[x + 1, y].button.Enabled = false;
-                    cells[x + 1, y].button.Text = Convert.ToString(cells[x + 1, y].value);
-                    //cells[x + 1, y].button.BackColor = Color.LightSlateGray;
+                    ChangeCell(x + 1, y);
                 }
             }
             if ((y < this.Height - 1))
@@ -280,10 +224,7 @@ namespace PashaKursa
                 }
                 else
                 {
-                    cells[x, y + 1].button.ForeColor = Color.Navy;
-                    cells[x, y + 1].button.Enabled = false;
-                    cells[x, y + 1].button.Text = Convert.ToString(cells[x, y + 1].value);
-                    //cells[x, y + 1].button.BackColor = Color.LightSlateGray;
+                    ChangeCell(x, y + 1);
                 }
             }
             if ((y > 0))
@@ -294,10 +235,7 @@ namespace PashaKursa
                 }
                 else
                 {
-                    cells[x, y - 1].button.ForeColor = Color.Navy;
-                    cells[x, y - 1].button.Enabled = false;
-                    cells[x, y - 1].button.Text = Convert.ToString(cells[x, y - 1].value);
-                    //cells[x, y - 1].button.BackColor = Color.LightSlateGray;
+                    ChangeCell(x, y - 1);
                 }
             }
             if ((x < this.Width - 1) && (y < this.Height - 1))
@@ -308,10 +246,7 @@ namespace PashaKursa
                 }
                 else
                 {
-                    cells[x + 1, y + 1].button.ForeColor = Color.Navy;
-                    cells[x + 1, y + 1].button.Enabled = false;
-                    cells[x + 1, y + 1].button.Text = Convert.ToString(cells[x + 1, y + 1].value);
-                    //cells[x + 1, y + 1].button.BackColor = Color.LightSlateGray;
+                    ChangeCell(x + 1, y + 1);
                 }
             }
             if ((x > 0) && (y > 0))
@@ -322,10 +257,7 @@ namespace PashaKursa
                 }
                 else
                 {
-                    cells[x - 1, y - 1].button.ForeColor = Color.Navy;
-                    cells[x - 1, y - 1].button.Enabled = false;
-                    cells[x - 1, y - 1].button.Text = Convert.ToString(cells[x - 1, y - 1].value);
-                    //cells[x - 1, y - 1].button.BackColor = Color.LightSlateGray;
+                    ChangeCell(x - 1, y - 1);
                 }
             }
             if ((x > 0) && (y < this.Height - 1))
@@ -336,10 +268,7 @@ namespace PashaKursa
                 }
                 else
                 {
-                    cells[x - 1, y + 1].button.ForeColor = Color.Navy;
-                    cells[x - 1, y + 1].button.Enabled = false;
-                    cells[x - 1, y + 1].button.Text = Convert.ToString(cells[x - 1, y + 1].value);
-                    //cells[x - 1, y + 1].button.BackColor = Color.LightSlateGray;
+                    ChangeCell(x - 1, y + 1);
                 }
             }
             if ((x < this.Width - 1) && (y > 0))
@@ -350,20 +279,37 @@ namespace PashaKursa
                 }
                 else
                 {
-                    cells[x + 1, y - 1].button.ForeColor = Color.Navy;
-                    cells[x + 1, y - 1].button.Enabled = false;
-                    cells[x + 1, y - 1].button.Text = Convert.ToString(cells[x + 1, y - 1].value);
-                    //cells[x + 1, y - 1].button.BackColor = Color.LightSlateGray;
+                    ChangeCell(x + 1, y - 1);
                 }
             }
         }
 
-        private void Relaxation()
+        private void ChangeCell(int x, int y)
         {
+            if (!cells[x, y].isChecked)
+            {
+                cells[x, y].button.ForeColor = Color.Navy;
+                cells[x, y].button.Enabled = false;
+                if (cells[x, y].value != 0)
+                    cells[x, y].button.Text = Convert.ToString(cells[x, y].value);
+                cells[x, y].button.BackColor = Color.LightSlateGray;
+            }
+        }
+
+        private void CheckWin()
+        {
+            int counter = 0;
+
             for (int i = 0; i < this.Width; i++)
                 for (int j = 0; j < this.Height; j++)
-                    if (cells[i, j].button.Text == "0")
-                        cells[i, j].button.Text = "";
+                    if (cells[i, j].isChecked && cells[i, j].isMine) 
+                        counter++;
+            if (counter == this.Mines)
+            {
+                MessageBox.Show("YOU WIN!!!", "WINNER", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Application.Restart();
+            }
+                
         }
     }
 }
