@@ -21,8 +21,8 @@ namespace PashaKursa
             value = 0;
             button = new Button
             {
-                Left = Y,
-                Top = X,
+                Left = X,
+                Top = Y,
                 TextAlign = ContentAlignment.MiddleCenter,
                 Width = Cell.Width,
                 Height = Cell.Height,
