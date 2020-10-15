@@ -91,8 +91,8 @@ namespace PashaKursa
                 int rnd_Y;
                 do
                 {
-                    rnd_X = rnd.Next(0, this.Width - 1);
-                    rnd_Y = rnd.Next(0, this.Height - 1);
+                    rnd_X = rnd.Next(0, this.Width);
+                    rnd_Y = rnd.Next(0, this.Height);
                 }
                 while (Cells[rnd_Y, rnd_X].isMine);
                 minespos.Add(new Point(rnd_X, rnd_Y));
@@ -146,7 +146,6 @@ namespace PashaKursa
         {
             Button button = (Button)sender;
             Point position = FindCell(button);
-            
             if(e.Button == MouseButtons.Right)
             {
                 if (!Cells[position.Y, position.X].isChecked)

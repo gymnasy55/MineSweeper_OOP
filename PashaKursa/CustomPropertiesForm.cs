@@ -23,7 +23,7 @@ namespace PashaKursa
                 int Width = Convert.ToInt32(txtLenght.Text);
                 int Height = Convert.ToInt32(txtHeight.Text);
                 int Mines = Convert.ToInt32(txtMines.Text);
-                if (Width <= 0 || Height <= 0 || Mines <= 0) { MessageBox.Show("Enter only numbers greater than 0", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                if (Width <= 0 || Height <= 0 || Mines <= 0 || (Width * Height < Mines)) { MessageBox.Show("Incorrect!", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
                 else 
                 {
                     Field field = new Field(Mode.Custom, Width, Height, Mines);
@@ -33,7 +33,7 @@ namespace PashaKursa
             }
             catch (Exception)
             {
-                MessageBox.Show("Enter only numbers greater than 0", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Incorrect!", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
