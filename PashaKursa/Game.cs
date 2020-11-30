@@ -39,37 +39,21 @@ namespace PashaKursa
                 int y = field.Minespos[i].Y;
 
                 if ((x > 0))
-                {
                     field.Cells[y, x - 1].value++;
-                }
                 if ((x < field.Width - 1))
-                {
                     field.Cells[y, x + 1].value++;
-                }
                 if ((y < field.Height - 1))
-                {
                     field.Cells[y + 1, x].value++;
-                }
                 if ((y > 0))
-                {
                     field.Cells[y - 1, x].value++;
-                }
                 if ((x < field.Width - 1) && (y < field.Height - 1))
-                {
                     field.Cells[y + 1, x + 1].value++;
-                }
                 if ((x > 0) && (y > 0))
-                {
                     field.Cells[y - 1, x - 1].value++;
-                }
                 if ((x > 0) && (y < field.Height - 1))
-                {
                     field.Cells[y + 1, x - 1].value++;
-                }
                 if ((x < field.Width - 1) && (y > 0))
-                {
                     field.Cells[y - 1, x + 1].value++;
-                }
             }
         }
 
@@ -88,9 +72,7 @@ namespace PashaKursa
                         field.FlagCount++;
                     }
                     else
-                    {
                         MessageBox.Show("Out of flags", "Alert!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
                 }
                 else
                 {
@@ -109,27 +91,19 @@ namespace PashaKursa
                     Application.Restart();
                 }
                 else
-                {
                     if (field.Cells[position.Y, position.X].value == 0)
                         CheckEmptyCell(position.Y, position.X);
                     else
                         ChangeCell(position.Y, position.X);
-                }
             }
         }
 
         public Point FindCell(Button button)
         {
             for (int i = 0; i < field.Height; i++)
-            {
                 for (int j = 0; j < field.Width; j++)
-                {
-                    if (field.Cells[i, j].button == button)
-                    {
-                        return new Point(j, i);
-                    }
-                }
-            }
+                        if (field.Cells[i, j].button == button)
+                            return new Point(j, i);
             return new Point(0, 0);
         }
 
@@ -138,61 +112,45 @@ namespace PashaKursa
             ChangeCell(y, x);
 
             if ((x > 0))
-            {
                 if ((field.Cells[y, x - 1].value == 0) && (field.Cells[y, x - 1].button.Enabled == true))
                     CheckEmptyCell(y, x - 1);
                 else
                     ChangeCell(y, x - 1);
-            }
             if ((x < field.Width - 1))
-            {
                 if ((field.Cells[y, x + 1].value == 0) && (field.Cells[y, x + 1].button.Enabled == true))
                     CheckEmptyCell(y, x + 1);
                 else
                     ChangeCell(y, x + 1);
-            }
             if ((y < field.Height - 1))
-            {
                 if ((field.Cells[y + 1, x].value == 0) && (field.Cells[y + 1, x].button.Enabled == true))
                     CheckEmptyCell(y + 1, x);
                 else
                     ChangeCell(y + 1, x);
-            }
             if ((y > 0))
-            {
                 if ((field.Cells[y - 1, x].value == 0) && (field.Cells[y - 1, x].button.Enabled == true))
                     CheckEmptyCell(y - 1, x);
                 else
                     ChangeCell(y - 1, x);
-            }
             if ((x < field.Width - 1) && (y < field.Height - 1))
-            {
                 if ((field.Cells[y + 1, x + 1].value == 0) && (field.Cells[y + 1, x + 1].button.Enabled == true))
                     CheckEmptyCell(y + 1, x + 1);
                 else
                     ChangeCell(y + 1, x + 1);
-            }
             if ((x > 0) && (y > 0))
-            {
                 if ((field.Cells[y - 1, x - 1].value == 0) && (field.Cells[y - 1, x - 1].button.Enabled == true))
                     CheckEmptyCell(y - 1, x - 1);
                 else
                     ChangeCell(y - 1, x - 1);
-            }
             if ((x > 0) && (y < field.Height - 1))
-            {
                 if ((field.Cells[y + 1, x - 1].value == 0) && (field.Cells[y + 1, x - 1].button.Enabled == true))
                     CheckEmptyCell(y + 1, x - 1);
                 else
                     ChangeCell(y + 1, x - 1);
-            }
             if ((x < field.Width - 1) && (y > 0))
-            {
                 if ((field.Cells[y - 1, x + 1].value == 0) && (field.Cells[y - 1, x + 1].button.Enabled == true))
                     CheckEmptyCell(y - 1, x + 1);
                 else
                     ChangeCell(y - 1, x + 1);
-            }
         }
 
         public void ChangeCell(int y, int x)
