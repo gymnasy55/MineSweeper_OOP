@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace PashaKursa
@@ -29,7 +25,7 @@ namespace PashaKursa
                 Image = null,
                 FlatStyle = FlatStyle.Flat,
                 AutoSize = false,
-                Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(204))),
+                Font = new Font("Arial", 16F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(204))),
                 BackColor = Color.LightGray,
                 ForeColor = Color.LightGray,
                 Text = ""

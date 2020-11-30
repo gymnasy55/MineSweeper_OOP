@@ -1,55 +1,61 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using PashaKursa.Properties;
 
 namespace PashaKursa
 {
     public partial class MainForm : Form
     {
-        private readonly Field field;
         private int time;
-        private Label timerCount;
+        private readonly Label timerCount;
+        private readonly Label flagCountLabel;
 
-        public MainForm(Field field)
+        public MainForm(int fieldWidth)
         {
             InitializeComponent();
-            this.field = field;
+            this.Icon = Resources.mine;
             time = 0;
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            foreach (var k in field.Cells)
+            var timer = new Timer
             {
-                this.Controls.Add(k.button);
-            }
-            this.Controls.Add(field.FlagCountLabel);
-            Timer timer = new Timer();
-            timer.Interval = 1000;
-            timer.Enabled = true;
-            timer.Tick += new EventHandler(timer_Tick);
+                Interval = 1000,
+                Enabled = true
+            };
+            timer.Tick += Timer_Tick;
+
             timerCount = new Label
             {
-                Left = field.Width * (Cell.Width + 2) + 3,
+                Left = fieldWidth * (Cell.Width + 2) + 3,
                 Top = 5,
                 Width = 35,
                 BorderStyle = BorderStyle.Fixed3D,
                 TextAlign = ContentAlignment.MiddleCenter,
-                Font = new Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204))),
+                Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 204),
                 ForeColor = Color.FromArgb(0, 0, 0),
                 Text = time.ToString()
             };
-            this.Controls.Add(timerCount);
-            this.Width = (field.Width * (Cell.Width + 2) + 2) + timerCount.Width + 20;
-            this.Height = field.Height * (Cell.Height + 2) + 50;
+            Controls.Add(timerCount);
+
+            flagCountLabel = new Label
+            {
+                Left = fieldWidth * (Cell.Width + 2) + 3,
+                Top = 50,
+                Width = 35,
+                BorderStyle = BorderStyle.Fixed3D,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 204),
+                ForeColor = Color.FromArgb(255, 0, 0),
+                Text = ""
+            };
+            Controls.Add(flagCountLabel);
         }
 
-        private void timer_Tick(object sender, EventArgs e)
+        public void ChangeFlagCountLabel(string text)
+        {
+            flagCountLabel.Text = text;
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
         {
             time++;
             timerCount.Text = time.ToString();

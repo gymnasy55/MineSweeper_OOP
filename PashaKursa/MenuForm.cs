@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using PashaKursa.Properties;
 
 namespace PashaKursa
 {
@@ -14,35 +9,30 @@ namespace PashaKursa
         public MenuForm()
         {
             InitializeComponent();
+            this.Icon = Resources.mine;
         }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
             Mode mode = Mode.Custom;
-            switch(btn.Name)
-            {
-                case "btnEasy":
-                    mode = Mode.Easy;
-                    break;
-                case "btnMedium":
-                    mode = Mode.Medium;
-                    break;
-                case "btnHard":
-                    mode = Mode.Hard;
-                    break;
-                default:
-                    break;
-            }
+            if (btn.Name == "btnEasy")
+                mode = Mode.Easy;
+            else if (btn.Name == "btnMedium")
+                mode = Mode.Medium;
+            else if (btn.Name == "btnHard") mode = Mode.Hard;
+
             Field field = new Field(mode);
-            MainForm mainForm = new MainForm(field);
-            Program.OpenForm(this, mainForm);
+            Game game = new Game(field, new MainForm(field.Width));
+            game.Start();
         }
 
         private void btnCustom_Click(object sender, EventArgs e)
         {
             CustomPropertiesForm customPropertiesForm = new CustomPropertiesForm();
-            Program.OpenForm(this, customPropertiesForm);
+            this.Hide();
+            customPropertiesForm.ShowDialog();
+            Application.Exit();
         }
     }
 }
