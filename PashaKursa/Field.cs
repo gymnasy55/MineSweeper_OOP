@@ -84,5 +84,90 @@ namespace PashaKursa
                 Cells[rnd_Y, rnd_X].isMine = true;
             }
         }
+
+        public void CheckBombs()
+        {
+            for (int i = 0; i < this.Mines; i++)
+            {
+                int x = this.Minespos[i].X;
+                int y = this.Minespos[i].Y;
+
+                if ((x > 0))
+                    this.Cells[y, x - 1].value++;
+                if ((x < this.Width - 1))
+                    this.Cells[y, x + 1].value++;
+                if ((y < this.Height - 1))
+                    this.Cells[y + 1, x].value++;
+                if ((y > 0))
+                    this.Cells[y - 1, x].value++;
+                if ((x < this.Width - 1) && (y < this.Height - 1))
+                    this.Cells[y + 1, x + 1].value++;
+                if ((x > 0) && (y > 0))
+                    this.Cells[y - 1, x - 1].value++;
+                if ((x > 0) && (y < this.Height - 1))
+                    this.Cells[y + 1, x - 1].value++;
+                if ((x < this.Width - 1) && (y > 0))
+                    this.Cells[y - 1, x + 1].value++;
+            }
+        }
+        public void CheckEmptyCell(int y, int x)
+        {
+            ChangeCell(y, x);
+
+            if ((x > 0))
+                if ((this.Cells[y, x - 1].value == 0) && (this.Cells[y, x - 1].button.Enabled == true))
+                    CheckEmptyCell(y, x - 1);
+                else
+                    ChangeCell(y, x - 1);
+            if ((x < this.Width - 1))
+                if ((this.Cells[y, x + 1].value == 0) && (this.Cells[y, x + 1].button.Enabled == true))
+                    CheckEmptyCell(y, x + 1);
+                else
+                    ChangeCell(y, x + 1);
+            if ((y < this.Height - 1))
+                if ((this.Cells[y + 1, x].value == 0) && (this.Cells[y + 1, x].button.Enabled == true))
+                    CheckEmptyCell(y + 1, x);
+                else
+                    ChangeCell(y + 1, x);
+            if ((y > 0))
+                if ((this.Cells[y - 1, x].value == 0) && (this.Cells[y - 1, x].button.Enabled == true))
+                    CheckEmptyCell(y - 1, x);
+                else
+                    ChangeCell(y - 1, x);
+            if ((x < this.Width - 1) && (y < this.Height - 1))
+                if ((this.Cells[y + 1, x + 1].value == 0) && (this.Cells[y + 1, x + 1].button.Enabled == true))
+                    CheckEmptyCell(y + 1, x + 1);
+                else
+                    ChangeCell(y + 1, x + 1);
+            if ((x > 0) && (y > 0))
+                if ((this.Cells[y - 1, x - 1].value == 0) && (this.Cells[y - 1, x - 1].button.Enabled == true))
+                    CheckEmptyCell(y - 1, x - 1);
+                else
+                    ChangeCell(y - 1, x - 1);
+            if ((x > 0) && (y < this.Height - 1))
+                if ((this.Cells[y + 1, x - 1].value == 0) && (this.Cells[y + 1, x - 1].button.Enabled == true))
+                    CheckEmptyCell(y + 1, x - 1);
+                else
+                    ChangeCell(y + 1, x - 1);
+            if ((x < this.Width - 1) && (y > 0))
+                if ((this.Cells[y - 1, x + 1].value == 0) && (this.Cells[y - 1, x + 1].button.Enabled == true))
+                    CheckEmptyCell(y - 1, x + 1);
+                else
+                    ChangeCell(y - 1, x + 1);
+        }
+
+        public void ChangeCell(int y, int x)
+        {
+            if (!this.Cells[y, x].isChecked)
+            {
+                this.Cells[y, x].button.ForeColor = Color.Navy;
+                this.Cells[y, x].button.Enabled = false;
+                if (this.Cells[y, x].value != 0)
+                    this.Cells[y, x].button.Text = Convert.ToString(this.Cells[y, x].value);
+                this.Cells[y, x].button.BackColor = Color.LightSlateGray;
+            }
+        }
+
+
     }
 }
