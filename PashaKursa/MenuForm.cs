@@ -9,28 +9,28 @@ namespace PashaKursa
         public MenuForm()
         {
             InitializeComponent();
-            this.Icon = Resources.mine;
+            Icon = Resources.mine;
         }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            Button btn = (Button)sender;
-            Mode mode = Mode.Custom;
+            var btn = (Button)sender;
+            var mode = Mode.Custom;
             if (btn.Name == "btnEasy")
                 mode = Mode.Easy;
             else if (btn.Name == "btnMedium")
                 mode = Mode.Medium;
             else if (btn.Name == "btnHard") mode = Mode.Hard;
 
-            Field field = new Field(mode);
-            Game game = new Game(field, new MainForm(field.Width));
+            var field = new Field(mode);
+            var game = new Game(field, new MainForm(field.Width));
             game.Start();
         }
 
         private void btnCustom_Click(object sender, EventArgs e)
         {
-            CustomPropertiesForm customPropertiesForm = new CustomPropertiesForm();
-            this.Hide();
+            var customPropertiesForm = new CustomPropertiesForm();
+            Hide();
             customPropertiesForm.ShowDialog();
             Application.Exit();
         }

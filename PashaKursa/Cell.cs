@@ -7,21 +7,21 @@ namespace PashaKursa
     {
         public static int Width { get; set; } = 40;
         public static int Height { get; set; } = 40;
-        public Button button { get; set; }
-        public int value { get; set; }
-        public bool isMine { get; set; } = false;
-        public bool isChecked { get; set; } = false;
+        public Button Button { get; set; }
+        public int Value { get; set; }
+        public bool IsMine { get; set; } = false;
+        public bool IsChecked { get; set; } = false;
 
-        public Cell(int X, int Y)
+        public Cell(int x, int y)
         {
-            value = 0;
-            button = new Button
+            Value = 0;
+            Button = new Button
             {
-                Left = X,
-                Top = Y,
+                Left = x,
+                Top = y,
                 TextAlign = ContentAlignment.MiddleCenter,
-                Width = Cell.Width,
-                Height = Cell.Height,
+                Width = Width,
+                Height = Height,
                 Image = null,
                 FlatStyle = FlatStyle.Flat,
                 AutoSize = false,

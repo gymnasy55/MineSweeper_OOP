@@ -4,25 +4,25 @@ using System.Windows.Forms;
 
 namespace PashaKursa
 {
-    class Game
+    public class Game
     {
         private readonly Field _field;
         private readonly MainForm _gameForm;
 
         public Game(Field field, MainForm gameForm)
         {
-            this._field = field;
-            this._gameForm = gameForm;
+            _field = field;
+            _gameForm = gameForm;
         }
 
         public void Start()
         {
-            for (int i = 0; i < _field.Height; i++)
-                for (int j = 0; j < _field.Width; j++)
-                    _field.Cells[i, j].button.MouseDown += ButtonClick;
+            for (var i = 0; i < _field.Height; i++)
+                for (var j = 0; j < _field.Width; j++)
+                    _field.Cells[i, j].Button.MouseDown += ButtonClick;
 
             foreach (var k in _field.Cells)
-                _gameForm.Controls.Add(k.button);
+                _gameForm.Controls.Add(k.Button);
 
             _gameForm.ChangeFlagCountLabel((_field.Mines - _field.FlagCount).ToString());
             _gameForm.Width = _field.Width * (Cell.Width + 2) + 2 + 35 + 20;
@@ -34,15 +34,15 @@ namespace PashaKursa
         private void ButtonClick(object sender, MouseEventArgs e)
         {
             var button = (Button)sender;
-            var position = this.FindCell(button);
+            var position = FindCell(button);
             if (e.Button == MouseButtons.Right)
             {
-                if (!_field.Cells[position.Y, position.X].isChecked)
+                if (!_field.Cells[position.Y, position.X].IsChecked)
                 {
                     if (_field.FlagCount < _field.Mines)
                     {
                         button.Image = Properties.Resources.flag as Bitmap;
-                        _field.Cells[position.Y, position.X].isChecked = true;
+                        _field.Cells[position.Y, position.X].IsChecked = true;
                         _field.FlagCount++;
                     }
                     else
@@ -51,21 +51,21 @@ namespace PashaKursa
                 else
                 {
                     button.Image = null;
-                    _field.Cells[position.Y, position.X].isChecked = false;
+                    _field.Cells[position.Y, position.X].IsChecked = false;
                     _field.FlagCount--;
                 }
                 _gameForm.ChangeFlagCountLabel((_field.Mines - _field.FlagCount).ToString());
                 CheckWin();
             }
-            else if (!_field.Cells[position.Y, position.X].isChecked)
+            else if (!_field.Cells[position.Y, position.X].IsChecked)
             {
-                if (_field.Cells[position.Y, position.X].isMine)
+                if (_field.Cells[position.Y, position.X].IsMine)
                 {
                     MessageBox.Show(@"YOU LOSE!", @"LOOSER!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     Application.Restart();
                 }
                 else
-                    if (_field.Cells[position.Y, position.X].value == 0)
+                    if (_field.Cells[position.Y, position.X].Value == 0)
                         _field.CheckEmptyCell(position.Y, position.X);
                     else
                         _field.ChangeCell(position.Y, position.X);
@@ -74,19 +74,19 @@ namespace PashaKursa
 
         public Point FindCell(Button button)
         {
-            for (int i = 0; i < _field.Height; i++)
-                for (int j = 0; j < _field.Width; j++)
-                        if (_field.Cells[i, j].button == button)
+            for (var i = 0; i < _field.Height; i++)
+                for (var j = 0; j < _field.Width; j++)
+                        if (_field.Cells[i, j].Button == button)
                             return new Point(j, i);
             return new Point(0, 0);
         }
 
         private void CheckWin()
         {
-            int counter = 0;
-            for (int i = 0; i < _field.Height; i++)
-                for (int j = 0; j < _field.Width; j++)
-                    if (_field.Cells[i, j].isChecked && _field.Cells[i, j].isMine)
+            var counter = 0;
+            for (var i = 0; i < _field.Height; i++)
+                for (var j = 0; j < _field.Width; j++)
+                    if (_field.Cells[i, j].IsChecked && _field.Cells[i, j].IsMine)
                         counter++;
             if (counter == _field.Mines)
             {

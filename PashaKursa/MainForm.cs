@@ -7,15 +7,15 @@ namespace PashaKursa
 {
     public partial class MainForm : Form
     {
-        private int time;
-        private readonly Label timerCount;
-        private readonly Label flagCountLabel;
+        private int _time;
+        private readonly Label _timerCountLabel;
+        private readonly Label _flagCountLabel;
 
         public MainForm(int fieldWidth)
         {
             InitializeComponent();
-            this.Icon = Resources.mine;
-            time = 0;
+            Icon = Resources.mine;
+            _time = 0;
             var timer = new Timer
             {
                 Interval = 1000,
@@ -23,7 +23,7 @@ namespace PashaKursa
             };
             timer.Tick += Timer_Tick;
 
-            timerCount = new Label
+            _timerCountLabel = new Label
             {
                 Left = fieldWidth * (Cell.Width + 2) + 3,
                 Top = 5,
@@ -32,11 +32,11 @@ namespace PashaKursa
                 TextAlign = ContentAlignment.MiddleCenter,
                 Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 204),
                 ForeColor = Color.FromArgb(0, 0, 0),
-                Text = time.ToString()
+                Text = _time.ToString()
             };
-            Controls.Add(timerCount);
+            Controls.Add(_timerCountLabel);
 
-            flagCountLabel = new Label
+            _flagCountLabel = new Label
             {
                 Left = fieldWidth * (Cell.Width + 2) + 3,
                 Top = 50,
@@ -47,18 +47,18 @@ namespace PashaKursa
                 ForeColor = Color.FromArgb(255, 0, 0),
                 Text = ""
             };
-            Controls.Add(flagCountLabel);
+            Controls.Add(_flagCountLabel);
         }
 
         public void ChangeFlagCountLabel(string text)
         {
-            flagCountLabel.Text = text;
+            _flagCountLabel.Text = text;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            time++;
-            timerCount.Text = time.ToString();
+            _time++;
+            _timerCountLabel.Text = _time.ToString();
         }
     }
 }
