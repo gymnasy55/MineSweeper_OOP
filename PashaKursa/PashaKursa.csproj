@@ -44,37 +44,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cell.cs" />
-    <Compile Include="CustomPropertiesForm.cs">
+    <Compile Include="BL\Cell.cs" />
+    <Compile Include="UI\CustomPropertiesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CustomPropertiesForm.Designer.cs">
+    <Compile Include="UI\CustomPropertiesForm.Designer.cs">
       <DependentUpon>CustomPropertiesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Field.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="MenuForm.cs">
+    <Compile Include="BL\Field.cs" />
+    <Compile Include="BL\Game.cs" />
+    <Compile Include="UI\MenuForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MenuForm.Designer.cs">
+    <Compile Include="UI\MenuForm.Designer.cs">
       <DependentUpon>MenuForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="UI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="UI\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Mode.cs" />
+    <Compile Include="BL\Mode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CustomPropertiesForm.resx">
+    <EmbeddedResource Include="UI\CustomPropertiesForm.resx">
       <DependentUpon>CustomPropertiesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="UI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MenuForm.resx">
+    <EmbeddedResource Include="UI\MenuForm.resx">
       <DependentUpon>MenuForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -87,7 +87,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -104,5 +103,6 @@
   <ItemGroup>
     <None Include="Resources\mine.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
