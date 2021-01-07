@@ -50,7 +50,7 @@ namespace PashaKursa
             Controls.Add(_flagCountLabel);
         }
 
-        public void ChangeFlagCountLabel(string text)
+        public void ChangeFlagCountLabelText(string text)
         {
             _flagCountLabel.Text = text;
         }

@@ -65,6 +65,7 @@ namespace PashaKursa
                 x = X;
             }
             TakeBombs();
+            CheckBombs();
         }
 
         private void TakeBombs()
@@ -85,7 +86,7 @@ namespace PashaKursa
             }
         }
 
-        public void CheckBombs()
+        private void CheckBombs()
         {
             for (var i = 0; i < Mines; i++)
             {
@@ -110,48 +111,49 @@ namespace PashaKursa
                     Cells[y - 1, x + 1].Value++;
             }
         }
-        public void CheckEmptyCell(int y, int x)
+
+        public void CheckEmptyCells(int y, int x)
         {
             ChangeCell(y, x);
 
             if (x > 0)
                 if (Cells[y, x - 1].Value == 0 && Cells[y, x - 1].Button.Enabled)
-                    CheckEmptyCell(y, x - 1);
+                    CheckEmptyCells(y, x - 1);
                 else
                     ChangeCell(y, x - 1);
             if (x < Width - 1)
                 if (Cells[y, x + 1].Value == 0 && Cells[y, x + 1].Button.Enabled)
-                    CheckEmptyCell(y, x + 1);
+                    CheckEmptyCells(y, x + 1);
                 else
                     ChangeCell(y, x + 1);
             if (y < Height - 1)
                 if (Cells[y + 1, x].Value == 0 && Cells[y + 1, x].Button.Enabled)
-                    CheckEmptyCell(y + 1, x);
+                    CheckEmptyCells(y + 1, x);
                 else
                     ChangeCell(y + 1, x);
             if (y > 0)
                 if (Cells[y - 1, x].Value == 0 && Cells[y - 1, x].Button.Enabled)
-                    CheckEmptyCell(y - 1, x);
+                    CheckEmptyCells(y - 1, x);
                 else
                     ChangeCell(y - 1, x);
             if (x < Width - 1 && y < Height - 1)
                 if (Cells[y + 1, x + 1].Value == 0 && Cells[y + 1, x + 1].Button.Enabled)
-                    CheckEmptyCell(y + 1, x + 1);
+                    CheckEmptyCells(y + 1, x + 1);
                 else
                     ChangeCell(y + 1, x + 1);
             if (x > 0 && y > 0)
                 if (Cells[y - 1, x - 1].Value == 0 && Cells[y - 1, x - 1].Button.Enabled)
-                    CheckEmptyCell(y - 1, x - 1);
+                    CheckEmptyCells(y - 1, x - 1);
                 else
                     ChangeCell(y - 1, x - 1);
             if (x > 0 && y < Height - 1)
                 if (Cells[y + 1, x - 1].Value == 0 && Cells[y + 1, x - 1].Button.Enabled)
-                    CheckEmptyCell(y + 1, x - 1);
+                    CheckEmptyCells(y + 1, x - 1);
                 else
                     ChangeCell(y + 1, x - 1);
             if (x < Width - 1 && y > 0)
                 if (Cells[y - 1, x + 1].Value == 0 && Cells[y - 1, x + 1].Button.Enabled)
-                    CheckEmptyCell(y - 1, x + 1);
+                    CheckEmptyCells(y - 1, x + 1);
                 else
                     ChangeCell(y - 1, x + 1);
         }

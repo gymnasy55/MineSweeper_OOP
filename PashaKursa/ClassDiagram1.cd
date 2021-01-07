@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="PashaKursa.Game">
+    <Position X="3.5" Y="1" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAACAACBAAAAAAAAAEAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Game.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PashaKursa.Field">
+    <Position X="8.25" Y="0.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAABAAAAAgAAAIAAEAAAAEAAAkAAAAAQCAAYAQ=</HashCode>
+      <FileName>Field.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PashaKursa.MainForm">
+    <Position X="0.5" Y="3.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAACAgAABAAACAAAACAAAAAAAAACAAAAAAAAQ=</HashCode>
+      <FileName>MainForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="PashaKursa.Mode">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAA=</HashCode>
+      <FileName>Mode.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
