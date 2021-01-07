@@ -24,7 +24,8 @@ namespace PashaKursa
                 else 
                 {
                     var field = new Field(Mode.Custom, width, height, mines);
-                    var game = new Game(field, new MainForm(field.Width));
+                    var form = new MainForm(field.Width);
+                    var game = new Game(field, form);
                     game.Start();
                 }
             }

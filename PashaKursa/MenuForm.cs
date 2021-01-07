@@ -23,7 +23,8 @@ namespace PashaKursa
             else if (btn.Name == "btnHard") mode = Mode.Hard;
 
             var field = new Field(mode);
-            var game = new Game(field, new MainForm(field.Width));
+            var form = new MainForm(field.Width);
+            var game = new Game(field, form);
             game.Start();
         }
 
